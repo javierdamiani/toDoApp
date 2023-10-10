@@ -1,22 +1,22 @@
-import './main.css';
-import ToDo from '../ToDo/ToDo';
+import "./main.css";
+import ToDo from "../ToDo/ToDo";
 
-function Main() {
+function Main(props) {
   return (
-    <div className='app'>
-      <h1 className='app__title'>ToDo App</h1>
-      <div className='app__container'>
+    <div className="app">
+      <h1 className="app__title">ToDo App</h1>
+      <div className="app__container">
         <input
-          className='app__container-input'
-          type='text'
-          placeholder='Enter your activity'
+          className="app__container-input"
+          type="text"
+          placeholder="Enter your activity"
         />
-        <div className='add'>Add</div>
+        <div className="add">Add</div>
       </div>
-      <div className='app__list'>
-        <ToDo text='Hola' />
-        <ToDo text='Texto' />
-        <ToDo text='Test' />
+      <div className="app__list">
+        <ToDo text="Hola" setPopupVisible={props.setPopupVisible} />
+        {/* <ToDo text="Texto" />
+        <ToDo text="Test" /> */}
       </div>
     </div>
   );
