@@ -1,13 +1,13 @@
-import Sequalize from "sequelize";
-import fs from "fs";
-import path from "path";
+import Sequelize from 'sequelize';
+import path from 'path';
+import fs from 'fs';
 
 let db = null;
 
-export default (app) => {
-  const config = app.libs.config;
+module.exports = (app) => {
   if (!db) {
-    const sequelize = new Sequalize(
+    const config = app.libs.config;
+    const sequelize = new Sequelize(
       config.database,
       config.username,
       config.password,
@@ -18,12 +18,16 @@ export default (app) => {
       Sequelize,
       models: {},
     };
-    const dir = path.join(__dirname, "models");
+
+    const dir = path.join(__dirname, 'models');
     fs.readdirSync(dir).forEach((filename) => {
       const modelDir = path.join(dir, filename);
-      const model = sequelize.import(modelDir);
+      const modelFunction = require(modelDir);
+      const model = modelFunction(sequelize, Sequelize.DataTypes);
+
       db.models[model.name] = model;
     });
+
     Object.keys(db.models).forEach((key) => {
       db.models[key].associate(db.models);
     });

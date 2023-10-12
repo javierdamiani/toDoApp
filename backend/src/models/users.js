@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Users = sequelize.define("Users", {
+  const Users = sequelize.define('Users', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -10,17 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: true,
-        len: [2, 50],
-      },
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        isEmail: true,
-        len: [2, 50],
-        unique: true,
       },
     },
     password: {
@@ -28,12 +17,21 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: true,
-        len: [2, 50],
+      },
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
       },
     },
   });
+
   Users.associate = (models) => {
     Users.hasMany(models.Tasks);
   };
+
   return Users;
 };
